@@ -1,0 +1,30 @@
+---
+name: Validate Renovate config presets
+
+"on":
+  pull_request:
+    paths:
+      - "*.json"
+      - ".github/workflows/renovate-config-validate.yml"
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+      - name: Validate config presets
+        run: |
+          npx --yes --package renovate@44.39.0 -- \
+            renovate-config-validator --strict \
+            default.json node.json renovate.json

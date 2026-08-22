@@ -1,0 +1,337 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Renovate configurations for AmadeusITGroup",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits"
+  ],
+  "dependencyDashboardTitle": "Renovate Dependency Dashboard",
+  "labels": [
+    "renovate"
+  ],
+  "commitMessagePrefix": "chore(deps):",
+  "prConcurrentLimit": 3,
+  "prHourlyLimit": 3,
+  "separateMajorMinor": true,
+  "separateMinorPatch": true,
+  "separateMultipleMajor": false,
+  "automerge": false,
+  "automergeType": "pr",
+  "platformAutomerge": true,
+  "minimumReleaseAge": "3 days",
+  "packageRules": [
+    {
+      "description": "Baseline for majors: never grouped, never automerged, one PR per dependency per major version. Majors are the riskiest updates and deserve isolated review.",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false,
+      "addLabels": [
+        "major"
+      ]
+    },
+    {
+      "description": "Baseline for minors: grouped per ecosystem but never automerged -- a human reviews the group before it lands.",
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Baseline for patches: grouped per ecosystem and automerged once CI passes. Patches are the lowest-risk update type, so this is the only automerge lane.",
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "automerge": true
+    },
+    {
+      "description": "npm -- minor bumps: one grouped PR, manual review.",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "groupName": "npm minor dependencies",
+      "addLabels": [
+        "npm"
+      ]
+    },
+    {
+      "description": "npm -- patch bumps: one grouped PR, automerged.",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "groupName": "npm patch dependencies",
+      "addLabels": [
+        "npm"
+      ]
+    },
+    {
+      "description": "npm -- major bumps: one PR per dependency per major version.",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "npm"
+      ]
+    },
+    {
+      "description": "Go modules -- minor bumps: one grouped PR, manual review.",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "groupName": "go minor dependencies",
+      "addLabels": [
+        "go"
+      ]
+    },
+    {
+      "description": "Go modules -- patch bumps: one grouped PR, automerged.",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "groupName": "go patch dependencies",
+      "addLabels": [
+        "go"
+      ]
+    },
+    {
+      "description": "Go modules -- major bumps: one PR per module per major version.",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "go"
+      ]
+    },
+    {
+      "description": "Python (pep621/uv, pip-tools, plain pip) -- minor bumps: one grouped PR, manual review.",
+      "matchManagers": [
+        "pep621",
+        "pip_requirements",
+        "pip-compile"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "groupName": "python minor dependencies",
+      "addLabels": [
+        "python"
+      ]
+    },
+    {
+      "description": "Python -- patch bumps: one grouped PR, automerged.",
+      "matchManagers": [
+        "pep621",
+        "pip_requirements",
+        "pip-compile"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "groupName": "python patch dependencies",
+      "addLabels": [
+        "python"
+      ]
+    },
+    {
+      "description": "Python -- major bumps: one PR per package per major version.",
+      "matchManagers": [
+        "pep621",
+        "pip_requirements",
+        "pip-compile"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "python"
+      ]
+    },
+    {
+      "description": "Container images (Dockerfiles and docker-compose) -- minor bumps: one grouped PR, manual review.",
+      "matchManagers": [
+        "dockerfile",
+        "docker-compose"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "groupName": "docker minor images",
+      "addLabels": [
+        "docker"
+      ]
+    },
+    {
+      "description": "Container images -- patch bumps: one grouped PR, automerged.",
+      "matchManagers": [
+        "dockerfile",
+        "docker-compose"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "groupName": "docker patch images",
+      "addLabels": [
+        "docker"
+      ]
+    },
+    {
+      "description": "Container images -- major bumps: one PR per image per major version.",
+      "matchManagers": [
+        "dockerfile",
+        "docker-compose"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "docker"
+      ]
+    },
+    {
+      "description": "Terraform providers and modules -- minor bumps: one grouped PR, manual review.",
+      "matchManagers": [
+        "terraform"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "groupName": "terraform minor dependencies",
+      "addLabels": [
+        "terraform"
+      ]
+    },
+    {
+      "description": "Terraform -- patch bumps: one grouped PR, automerged.",
+      "matchManagers": [
+        "terraform"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "groupName": "terraform patch dependencies",
+      "addLabels": [
+        "terraform"
+      ]
+    },
+    {
+      "description": "Terraform -- major bumps: one PR per provider/module per major version.",
+      "matchManagers": [
+        "terraform"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "terraform"
+      ]
+    },
+    {
+      "description": "Helm chart dependencies -- minor bumps: one grouped PR, manual review.",
+      "matchManagers": [
+        "helmv3"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "groupName": "helm minor charts",
+      "addLabels": [
+        "helm"
+      ]
+    },
+    {
+      "description": "Helm chart dependencies -- patch bumps: one grouped PR, automerged.",
+      "matchManagers": [
+        "helmv3"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "groupName": "helm patch charts",
+      "addLabels": [
+        "helm"
+      ]
+    },
+    {
+      "description": "Helm chart dependencies -- major bumps: one PR per chart per major version.",
+      "matchManagers": [
+        "helmv3"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "helm"
+      ]
+    },
+    {
+      "description": "GitHub Actions -- minor bumps: one grouped PR, manual review.",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "groupName": "github-actions minor dependencies",
+      "addLabels": [
+        "github-actions"
+      ]
+    },
+    {
+      "description": "GitHub Actions -- patch bumps: one grouped PR, automerged.",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "groupName": "github-actions patch dependencies",
+      "addLabels": [
+        "github-actions"
+      ]
+    },
+    {
+      "description": "GitHub Actions -- major bumps: one PR per action per major version.",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "github-actions"
+      ]
+    },
+    {
+      "description": "Digest and pin updates are low-risk and mechanical: keep them in their own automerged lane so they do not dilute the minor/patch groups.",
+      "matchUpdateTypes": [
+        "digest",
+        "pin",
+        "pinDigest"
+      ],
+      "groupName": "digest and pin updates",
+      "addLabels": [
+        "digest-pin"
+      ],
+      "automerge": true
+    }
+  ]
+}

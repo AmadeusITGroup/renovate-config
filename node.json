@@ -1,0 +1,93 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Node/Vue/TS archetype. Groups npm/pnpm deps and carves type definitions out.",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": [
+      "before 5am on monday"
+    ]
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "matchStrings": [
+        "NODE_VERSION:\\s*\"(?<currentValue>\\d+)\""
+      ],
+      "datasourceTemplate": "node-version",
+      "depNameTemplate": "node",
+      "versioningTemplate": "node"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Group ESLint and Prettier tooling together.",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "/eslint/",
+        "/prettier/"
+      ],
+      "groupName": "lint tooling"
+    },
+    {
+      "description": "Group Node.js and pnpm runtime version bumps (engines and packageManager fields) across all manifests",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchDepTypes": [
+        "engines",
+        "packageManager"
+      ],
+      "groupName": "node and pnpm runtime"
+    },
+    {
+      "description": "Isolate pnpm package manager updates to validate workspace compatibility",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchDepTypes": [
+        "packageManager"
+      ],
+      "matchPackageNames": [
+        "pnpm"
+      ],
+      "groupName": "pnpm"
+    },
+    {
+      "description": "Group all @o3r/ Otter packages together since they share a release cadence",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "/^@o3r//"
+      ],
+      "groupName": "Otter packages"
+    },
+    {
+      "description": "Isolate axios updates for manual review due to breaking change history",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "axios"
+      ],
+      "groupName": "axios"
+    },
+    {
+      "description": "Group Node.js runtime version updates across package.json and CI workflows",
+      "matchManagers": [
+        "npm",
+        "custom.regex"
+      ],
+      "matchDepNames": [
+        "node"
+      ],
+      "groupName": "Node.js runtime"
+    }
+  ]
+}

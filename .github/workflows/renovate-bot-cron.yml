@@ -1,0 +1,70 @@
+name: Renovate
+
+"on":
+  schedule:
+    - cron: "0 0 1 * *"
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: "Optional repository to scan (name or owner/name)"
+        required: false
+        type: string
+      log_level:
+        description: "Renovate log level"
+        required: false
+        default: "info"
+        type: choice
+        options:
+          - trace
+          - debug
+          - info
+          - warn
+          - error
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Renovate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.RENOVATE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RENOVATE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - name: Resolve run scope
+        id: scope
+        env:
+          INPUT_REPOSITORY: ${{ inputs.repository }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          if [ -n "$INPUT_REPOSITORY" ]; then
+            case "$INPUT_REPOSITORY" in
+              */*) repository="$INPUT_REPOSITORY" ;;
+              *) repository="$OWNER/$INPUT_REPOSITORY" ;;
+            esac
+            echo "autodiscover=false" >> "$GITHUB_OUTPUT"
+            echo "repositories=$repository" >> "$GITHUB_OUTPUT"
+          else
+            echo "autodiscover=true" >> "$GITHUB_OUTPUT"
+            echo "repositories=" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run Renovate
+        uses: renovatebot/github-action@v46.2.2
+        env:
+          RENOVATE_AUTODISCOVER: ${{ steps.scope.outputs.autodiscover }}
+          RENOVATE_REPOSITORIES: ${{ steps.scope.outputs.repositories }}
+          RENOVATE_AUTODISCOVER_FILTER: ${{ github.repository_owner }}
+          RENOVATE_ONBOARDING: "true"
+          RENOVATE_REQUIRE_CONFIG: "required"
+          LOG_LEVEL: ${{ inputs.log_level || 'info' }}
+        with:
+          token: ${{ steps.app-token.outputs.token }}
