@@ -4,7 +4,7 @@
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": [
-      "before 5am on monday"
+      "every 3 day"
     ]
   },
   "customManagers": [
@@ -88,6 +88,18 @@
         "node"
       ],
       "groupName": "Node.js runtime"
+    },
+    {
+      "description": "Group webpack dependencies separately across all update types",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "/webpack/"
+      ],
+      "groupName": "webpack dependencies",
+      "separateMajorMinor": false,
+      "separateMinorPatch": false
     }
   ]
 }
