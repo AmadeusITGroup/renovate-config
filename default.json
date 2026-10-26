@@ -17,6 +17,12 @@
   "minimumReleaseAge": "3 days",
   "packageRules": [
     {
+      "description": "AI Primitives Hub packages are organization-owned and do not require a release-stability delay.",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["/^@ai-primitives-hub\\//"],
+      "minimumReleaseAge": null
+    },
+    {
       "description": "Baseline for majors: never grouped, never automerged, one PR per dependency per major version. Majors are the riskiest updates and deserve isolated review.",
       "matchUpdateTypes": ["major"],
       "automerge": false,
