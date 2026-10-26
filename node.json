@@ -100,6 +100,16 @@
       "groupName": "webpack dependencies",
       "separateMajorMinor": false,
       "separateMinorPatch": false
+    },
+    {
+      "description": "AI Primitives Hub packages are organization-owned and do not require a release-stability delay.",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "/^@ai-primitives-hub\\//"
+      ],
+      "minimumReleaseAge": null
     }
   ]
 }
